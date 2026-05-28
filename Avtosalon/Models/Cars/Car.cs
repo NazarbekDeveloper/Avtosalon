@@ -1,4 +1,5 @@
 ﻿using Avtosalon.Models.Katalog;
+using Avtosalon.Models.Sales;
 
 namespace Avtosalon.Models.Cars
 {
@@ -13,5 +14,6 @@ namespace Avtosalon.Models.Cars
         public string VIN { get; set; }
 
         public CarModel CarModel { get; set; }
+        public Sale Sale { get; set; }
     }
 }
