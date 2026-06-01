@@ -8,6 +8,6 @@ namespace Avtosalon.Services.Cars
         IQueryable<Car> RetrieveAllCars();
         ValueTask<Car> RetrieveCarByIdAsync(Guid carId);
         ValueTask<Car> ModifyCarAsync(Car car);
-        ValueTask<Car> RemoveCarAsync(Car car);
+        ValueTask<Car> RemoveCarAsync(Guid carId);
     }
 }

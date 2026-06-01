@@ -82,18 +82,18 @@ namespace Avtosalon.Services.Cars
             return await this.carRepository.UpdateCarAsync(car);
         }
 
-        public async ValueTask<Car> RemoveCarAsync(Car car)
+        public async ValueTask<Car> RemoveCarAsync(Guid carId)
         {
-            if(car.Id == Guid.Empty)
+            if(carId == Guid.Empty)
             {
                 throw new ValidationException("Car Id null bo'lishi mumkin emas.");
             }
 
-            Car maybeCar = await carRepository.SelectCarByIdAsync(car.Id);
+            Car maybeCar = await carRepository.SelectCarByIdAsync(carId);
 
             if(maybeCar is null)
             {
-                throw new NotFoundException($"{car.Id} Id-li Car topilmadi.");
+                throw new NotFoundException($"{carId} Id-li Car topilmadi.");
             }
 
             return await carRepository.DeleteCarAsync(maybeCar);
