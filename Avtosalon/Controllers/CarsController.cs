@@ -1,7 +1,6 @@
 ﻿using Avtosalon.Models.Cars;
 using Avtosalon.Services.Cars;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 using TradeFlow.Models.Exceptions;
 using ValidationException = TradeFlow.Models.Exceptions.ValidationException;
 
