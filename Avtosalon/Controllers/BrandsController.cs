@@ -1,5 +1,5 @@
-﻿using Avtosalon.Models.Cars;
-using Avtosalon.Services.Cars;
+﻿using Avtosalon.Models.Katalog;
+using Avtosalon.Services.Brands;
 using Microsoft.AspNetCore.Mvc;
 using TradeFlow.Models.Exceptions;
 using ValidationException = TradeFlow.Models.Exceptions.ValidationException;
@@ -8,79 +8,79 @@ namespace Avtosalon.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CarsController : ControllerBase
+    public class BrandsController : ControllerBase
     {
-        private readonly ICarService carService;
-        public CarsController(ICarService carService)
+        private readonly IBrandService brandService;
+        public BrandsController(IBrandService brandService)
         {
-            this.carService = carService;
+            this.brandService = brandService;
         }
 
         [HttpPost]
-        public async ValueTask<ActionResult<Car>> PostCarAsync(Car car)
+        public async ValueTask<ActionResult<Brand>> PostBrandAsync(Brand brand)
         {
             try
             {
-                Car addedCar = await carService.AddCarAsync(car);
+                Brand addedBrand = await brandService.AddBrandAsync(brand);
 
-                return StatusCode(201, addedCar);
+                return StatusCode(201, addedBrand);
             }
-            catch (ValidationException validationException)
+            catch(ValidationException validationException)
             {
                 return BadRequest(validationException.Message);
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
-                return StatusCode(500, "Serverda xatolik yuz berdi");
+                return BadRequest("Serverda xatolik yuz berdi.");
             }
         }
 
         [HttpGet]
-        public ActionResult<IQueryable<Car>> GetAllCars()
+        public ActionResult<IQueryable<Brand>> GetAllBrand()
         {
             try
             {
-                IQueryable<Car> cars = carService.RetrieveAllCars();
+                IQueryable<Brand> brands = brandService.RetrieveAllBrands();
 
-                return Ok(cars);
+                return StatusCode(201,brands);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 return BadRequest("Serverda xatolik yuz berdi");
             }
         }
 
-        [HttpGet("{carId}")]
-        public async ValueTask<ActionResult<Car>> GetCarByIdAsync(Guid carId)
+        [HttpGet("{brandId}")]
+        public async ValueTask<ActionResult<Brand>> GetBrandById(Guid brandId)
         {
             try
             {
-                Car maybeCar = await carService.RetrieveCarByIdAsync(carId);
+                Brand maybeBrand = await brandService.RetrieveBrandByIdAsync(brandId);
 
-                return Ok(maybeCar);
+                return Ok(maybeBrand);
             }
-            catch (ValidationException validationException)
+            catch(ValidationException validationException)
             {
                 return BadRequest(validationException.Message);
             }
-            catch (NotFoundException notFoundException)
+            catch(NotFoundException  notFoundException)
             {
                 return NotFound(notFoundException.Message);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 return BadRequest("Serverda xatolik yuz berdi");
             }
         }
 
         [HttpPut]
-        public async ValueTask<ActionResult<Car>> PutCarAsync(Car car)
+        public async ValueTask<ActionResult<Brand>> PutBrandAsync(Brand brand)
         {
             try
             {
-                Car updatedCar = await carService.ModifyCarAsync(car);
+                Brand maybeBrand = await brandService.ModifyBrandAsync(brand);
 
-                return Ok(updatedCar);
+                return Ok(maybeBrand);
             }
             catch(ValidationException validationException)
             {
@@ -92,18 +92,18 @@ namespace Avtosalon.Controllers
             }
             catch(Exception)
             {
-                return StatusCode(500, "Serverda xatolik yuz berdi");
+                return BadRequest("Serverda xatolik yuz berdi");
             }
         }
 
-        [HttpDelete("{carId}")]
-        public async ValueTask<ActionResult<Car>> DeleteCarAsync(Guid carId)
+        [HttpDelete]
+        public async ValueTask<ActionResult<Brand>> DeleteBrandAsync(Guid brandId)
         {
             try
             {
-                Car deletedCar = await carService.RemoveCarAsync(carId);
+                Brand deletedBrand = await brandService.RemoveBrandAsync(brandId);
 
-                return Ok(deletedCar);
+                return Ok(deletedBrand);
             }
             catch(ValidationException validationException)
             {
@@ -115,7 +115,7 @@ namespace Avtosalon.Controllers
             }
             catch(Exception)
             {
-                return StatusCode(500, "Serverda xatolik yuz berdi");
+                return BadRequest("Serverda xatolik yuz berdi");
             }
         }
     }
