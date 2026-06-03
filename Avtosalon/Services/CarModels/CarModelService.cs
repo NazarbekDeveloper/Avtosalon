@@ -6,8 +6,8 @@ namespace Avtosalon.Services.CarModels
 {
     public class CarModelService : ICarModelService
     {
-        private readonly CarModelRepository carModelRepository;
-        public CarModelService(CarModelRepository carModelRepository)
+        private readonly ICarModelRepository carModelRepository;
+        public CarModelService(ICarModelRepository carModelRepository)
         {
             this.carModelRepository = carModelRepository;
         }

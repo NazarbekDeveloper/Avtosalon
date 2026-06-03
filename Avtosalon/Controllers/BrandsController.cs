@@ -42,7 +42,7 @@ namespace Avtosalon.Controllers
             {
                 IQueryable<Brand> brands = brandService.RetrieveAllBrands();
 
-                return StatusCode(201,brands);
+                return StatusCode(200,brands);
             }
             catch(Exception)
             {
