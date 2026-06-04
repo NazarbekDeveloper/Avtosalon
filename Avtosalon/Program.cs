@@ -2,9 +2,11 @@ using Avtosalon.Data;
 using Avtosalon.Repositories.Brands;
 using Avtosalon.Repositories.CarModels;
 using Avtosalon.Repositories.Cars;
+using Avtosalon.Repositories.Customers;
 using Avtosalon.Services.Brands;
 using Avtosalon.Services.CarModels;
 using Avtosalon.Services.Cars;
+using Avtosalon.Services.Customers;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -20,6 +22,8 @@ builder.Services.AddTransient<IBrandRepository, BrandRepository>();
 builder.Services.AddTransient<IBrandService, BrandService>();
 builder.Services.AddTransient<ICarModelRepository, CarModelRepository>();
 builder.Services.AddTransient<ICarModelService, CarModelService>();
+builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
+builder.Services.AddTransient<ICustomerService, CustomerService>();
 
 var app = builder.Build();
 
