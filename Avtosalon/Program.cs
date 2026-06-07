@@ -4,11 +4,13 @@ using Avtosalon.Repositories.CarModels;
 using Avtosalon.Repositories.Cars;
 using Avtosalon.Repositories.Customers;
 using Avtosalon.Repositories.Employees;
+using Avtosalon.Repositories.Sales;
 using Avtosalon.Services.Brands;
 using Avtosalon.Services.CarModels;
 using Avtosalon.Services.Cars;
 using Avtosalon.Services.Customers;
 using Avtosalon.Services.Employees;
+using Avtosalon.Services.Sales;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -28,6 +30,8 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+builder.Services.AddScoped<ISaleService, SaleService>();
 
 var app = builder.Build();
 

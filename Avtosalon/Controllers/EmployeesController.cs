@@ -16,7 +16,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpPost]
-        public async ValueTask<ActionResult<Employee>> PostEmployeeEsync(Employee employee)
+        public async ValueTask<ActionResult<Employee>> PostEmployeeAsync(Employee employee)
         {
             try
             {
