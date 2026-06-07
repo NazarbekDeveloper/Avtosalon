@@ -1,8 +1,8 @@
 ﻿using Avtosalon.Models.Katalog;
 using Avtosalon.Services.CarModels;
 using Microsoft.AspNetCore.Mvc;
-using TradeFlow.Models.Exceptions;
-using ValidationException = TradeFlow.Models.Exceptions.ValidationException;
+using Avtosalon.Models.Exceptions;
+using ValidationException = Avtosalon.Models.Exceptions.ValidationException;
 
 namespace Avtosalon.Controllers
 {
@@ -23,7 +23,7 @@ namespace Avtosalon.Controllers
             {
                 CarModel addedCarModel = await carModelService.AddCarModelAsync(carModel);
 
-                return StatusCode(201,carModel);
+                return StatusCode(201,addedCarModel);
             }
             catch(ValidationException validationException)
             {

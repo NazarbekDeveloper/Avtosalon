@@ -1,7 +1,7 @@
 ﻿using Avtosalon.Models.Persons;
 using Avtosalon.Services.Employees;
 using Microsoft.AspNetCore.Mvc;
-using TradeFlow.Models.Exceptions;
+using Avtosalon.Models.Exceptions;
 
 namespace Avtosalon.Controllers
 {
@@ -102,7 +102,7 @@ namespace Avtosalon.Controllers
             {
                 Employee deletedEmployee = await this.employeeService.RemoveEmployeeByIdAsync(employeeId);
 
-                return Ok(employeeId);
+                return Ok(deletedEmployee);
             }
             catch(ValidationException validationException)
             {

@@ -1,8 +1,8 @@
 ﻿using Avtosalon.Models.Cars;
 using Avtosalon.Services.Cars;
 using Microsoft.AspNetCore.Mvc;
-using TradeFlow.Models.Exceptions;
-using ValidationException = TradeFlow.Models.Exceptions.ValidationException;
+using Avtosalon.Models.Exceptions;
+using ValidationException = Avtosalon.Models.Exceptions.ValidationException;
 
 namespace Avtosalon.Controllers
 {

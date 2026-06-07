@@ -2,13 +2,13 @@
 using Avtosalon.Services.Customers;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using TradeFlow.Models.Exceptions;
-using ValidationException = TradeFlow.Models.Exceptions.ValidationException;
+using Avtosalon.Models.Exceptions;
+using ValidationException = Avtosalon.Models.Exceptions.ValidationException;
 
 namespace Avtosalon.Controllers
 {
     [ApiController]
-    [Route("api[controller]")]
+    [Route("api/[controller]")]
     public class CustomersController : ControllerBase
     {
         private readonly ICustomerService customerService;
@@ -64,7 +64,7 @@ namespace Avtosalon.Controllers
 
                 return Ok(maybeCustomer);
             }
-            catch(TradeFlow.Models.Exceptions.ValidationException validationException)
+            catch(Avtosalon.Models.Exceptions.ValidationException validationException)
             {
                 return BadRequest(validationException.Message);
             }

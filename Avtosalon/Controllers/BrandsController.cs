@@ -1,8 +1,8 @@
 ﻿using Avtosalon.Models.Katalog;
 using Avtosalon.Services.Brands;
 using Microsoft.AspNetCore.Mvc;
-using TradeFlow.Models.Exceptions;
-using ValidationException = TradeFlow.Models.Exceptions.ValidationException;
+using Avtosalon.Models.Exceptions;
+using ValidationException = Avtosalon.Models.Exceptions.ValidationException;
 
 namespace Avtosalon.Controllers
 {
@@ -96,7 +96,7 @@ namespace Avtosalon.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{brandId}")]
         public async ValueTask<ActionResult<Brand>> DeleteBrandAsync(Guid brandId)
         {
             try

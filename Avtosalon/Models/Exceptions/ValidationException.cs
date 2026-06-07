@@ -1,4 +1,4 @@
-﻿namespace TradeFlow.Models.Exceptions
+﻿namespace Avtosalon.Models.Exceptions
 {
     public class ValidationException : Exception
     {

@@ -1,6 +1,7 @@
 ﻿using Avtosalon.Models.Cars;
+using Avtosalon.Models.Katalog;
 using Avtosalon.Repositories.Cars;
-using TradeFlow.Models.Exceptions;
+using Avtosalon.Models.Exceptions;
 
 namespace Avtosalon.Services.Cars
 {
@@ -25,6 +26,7 @@ namespace Avtosalon.Services.Cars
                 throw new ValidationException("Car nomi null bo'lishi mumkin emas.");
             }
 
+            car.Id = Guid.NewGuid();
             Car myCar = await carRepository.InsertCarAsync(car);
 
             if(myCar is null)

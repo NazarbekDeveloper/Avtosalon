@@ -1,6 +1,7 @@
-﻿using Avtosalon.Models.Persons;
+﻿using Avtosalon.Models.Katalog;
+using Avtosalon.Models.Persons;
 using Avtosalon.Repositories.Employees;
-using TradeFlow.Models.Exceptions;
+using Avtosalon.Models.Exceptions;
 
 namespace Avtosalon.Services.Employees
 {
@@ -19,16 +20,12 @@ namespace Avtosalon.Services.Employees
                 throw new ValidationException("Employee null bo'lishi mumkun emas.");
             }
 
-            if(employee.Id == Guid.Empty)
-            {
-                throw new ValidationException("Employee Id bo'sh bo'lishi mumkun emas.");
-            }
-
             if(string.IsNullOrWhiteSpace(employee.FullName))
             {
                 throw new ValidationException("Employee FullName bo'sh bo'lishi mumkun emas.");
             }
 
+            employee.Id = Guid.NewGuid();
             Employee addedEmployee = await this.employeeRepository.InsertEmployeeAsync(employee);
 
             return addedEmployee;

@@ -1,6 +1,6 @@
 ﻿using Avtosalon.Models.Katalog;
 using Avtosalon.Repositories.Brands;
-using TradeFlow.Models.Exceptions;
+using Avtosalon.Models.Exceptions;
 
 namespace Avtosalon.Services.Brands
 {
@@ -24,11 +24,7 @@ namespace Avtosalon.Services.Brands
                 throw new ValidationException("Brand name null yoki bo'sh bo'lishi mumkin emas.");
             }
 
-            if(brand.Id == Guid.Empty)
-            {
-                throw new ValidationException("Brand id bo'sh bo'lishi mumkun emas");
-            }
-
+            brand.Id = Guid.NewGuid();
             Brand addedBrand = await this.brandRepository.InsertBrandAsync(brand);
 
             if(addedBrand is null)

@@ -1,6 +1,7 @@
-﻿using Avtosalon.Models.Persons;
+﻿using Avtosalon.Models.Katalog;
+using Avtosalon.Models.Persons;
 using Avtosalon.Repositories.Customers;
-using TradeFlow.Models.Exceptions;
+using Avtosalon.Models.Exceptions;
 
 namespace Avtosalon.Services.Customers
 {
@@ -18,16 +19,13 @@ namespace Avtosalon.Services.Customers
             {
                 throw new ValidationException("Customer null bo'lishi mumkin emas.");
             }
-            
-            if(customer.Id == Guid.Empty)
-            {
-                throw new ValidationException("Customer Id bo'sh bo'lishi mumkun emas.");
-            }
-
+          
             if(string.IsNullOrWhiteSpace(customer.FullName))
             {
                 throw new ValidationException("Customer FullName bo'sh bo'lishi mumkun emas.");
             }
+
+            customer.Id = Guid.NewGuid();
 
             return await customerRepository.InsertCustomerAsync(customer);
         }
