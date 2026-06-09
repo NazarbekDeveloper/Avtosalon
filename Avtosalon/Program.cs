@@ -1,4 +1,5 @@
 using Avtosalon.Data;
+using Avtosalon.Middlewares;
 using Avtosalon.Repositories.Brands;
 using Avtosalon.Repositories.CarModels;
 using Avtosalon.Repositories.Cars;
@@ -41,6 +42,7 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
+app.UseMiddleware<GlobalExceptionHandling>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

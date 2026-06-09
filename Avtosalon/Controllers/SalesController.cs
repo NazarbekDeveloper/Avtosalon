@@ -1,5 +1,4 @@
-﻿using Avtosalon.Models.Exceptions;
-using Avtosalon.Models.Sales;
+﻿using Avtosalon.Models.Sales;
 using Avtosalon.Services.Sales;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,108 +18,41 @@ namespace Avtosalon.Controllers
         [HttpPost]
         public async ValueTask<ActionResult<Sale>> PostSaleAsync(Sale sale)
         {
-            try
-            {
-                Sale addedSale = await saleService.AddSaleAsync(sale);
+            Sale addedSale = await saleService.AddSaleAsync(sale);
 
-                return StatusCode(201, addedSale);
-            }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch (NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Serverda xatolik yuz berdi.");
-            }
+            return StatusCode(201, addedSale);
         }
 
         [HttpGet]
         public ActionResult<IQueryable<Sale>> GetAllSales()
         {
-            try
-            {
-                IQueryable<Sale> sales = saleService.RetrieveAllSales();
+            IQueryable<Sale> sales = saleService.RetrieveAllSales();
 
-                return Ok(sales);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Serverda xatolik yuz berdi.");
-            }
+            return Ok(sales);
         }
 
         [HttpGet("{saleId}")]
         public async ValueTask<ActionResult<Sale>> GetSaleByIdAsync(Guid saleId)
         {
-            try
-            {
-                Sale maybeSale = await saleService.RetrieveSaleByIdAsync(saleId);
+            Sale maybeSale = await saleService.RetrieveSaleByIdAsync(saleId);
 
-                return Ok(maybeSale);
-            }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch (NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Serverda xatolik yuz berdi.");
-            }
+            return Ok(maybeSale);
         }
 
         [HttpPut]
         public async ValueTask<ActionResult<Sale>> PutSaleAsync(Sale sale)
         {
-            try
-            {
-                Sale updatedSale = await saleService.ModifySaleAsync(sale);
+            Sale updatedSale = await saleService.ModifySaleAsync(sale);
 
-                return Ok(updatedSale);
-            }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch (NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Serverda xatolik yuz berdi.");
-            }
+            return Ok(updatedSale);
         }
 
         [HttpDelete("{saleId}")]
         public async ValueTask<ActionResult<Sale>> DeleteSaleAsync(Guid saleId)
         {
-            try
-            {
-                Sale deletedSale = await saleService.RemoveSaleAsync(saleId);
+            Sale deletedSale = await saleService.RemoveSaleAsync(saleId);
 
-                return Ok(deletedSale);
-            }
-            catch (ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch (NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Serverda xatolik yuz berdi.");
-            }
+            return Ok(deletedSale);
         }
     }
 }

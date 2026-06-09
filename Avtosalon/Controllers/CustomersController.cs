@@ -1,9 +1,6 @@
 ﻿using Avtosalon.Models.Persons;
 using Avtosalon.Services.Customers;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Avtosalon.Models.Exceptions;
-using ValidationException = Avtosalon.Models.Exceptions.ValidationException;
 
 namespace Avtosalon.Controllers
 {
@@ -20,108 +17,41 @@ namespace Avtosalon.Controllers
         [HttpPost]
         public async ValueTask<ActionResult<Customer>> PostCustomerAsync(Customer customer)
         {
-            try
-            {
-                Customer maybeCustomer = await customerService.AddCustomerAsync(customer);
+            Customer maybeCustomer = await customerService.AddCustomerAsync(customer);
 
-                return StatusCode(201,maybeCustomer);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest("Serverda xatolik ro'y berdi.");
-            }
+            return StatusCode(201, maybeCustomer);
         }
 
         [HttpGet]
         public ActionResult<IQueryable<Customer>> GetAllCustomers()
         {
-            try
-            {
-                IQueryable<Customer> customers = this.customerService.RetrieveAllCustomers();
+            IQueryable<Customer> customers = this.customerService.RetrieveAllCustomers();
 
-                return Ok(customers);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(customers);
         }
 
         [HttpGet("{customerId}")]
         public async ValueTask<ActionResult<Customer>> GetCustomerByIdAsync(Guid customerId)
         {
-            try
-            {
-                Customer maybeCustomer = await customerService.RetrieveCustomerByIdAsync(customerId);
+            Customer maybeCustomer = await customerService.RetrieveCustomerByIdAsync(customerId);
 
-                return Ok(maybeCustomer);
-            }
-            catch(Avtosalon.Models.Exceptions.ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest("Serverda xatolik ro'y berdi.");
-            }
+            return Ok(maybeCustomer);
         }
 
         [HttpPut]
         public async ValueTask<ActionResult<Customer>> PutCustomerAsync(Customer customer)
         {
-            try
-            {
-                Customer updatedCustomer = await customerService.ModifyCustomerAsync(customer);
+            Customer updatedCustomer = await customerService.ModifyCustomerAsync(customer);
 
-                return Ok(updatedCustomer);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(updatedCustomer);
         }
 
         [HttpDelete("{customerId}")]
         public async ValueTask<ActionResult<Customer>> DeleteCustomerByIdAsync(Guid customerId)
         {
-            try
-            {
-                Customer deletedCustomer = await customerService.RemoveCustomerByIdAsync(customerId);
+            Customer deletedCustomer = await customerService.RemoveCustomerByIdAsync(customerId);
 
-                return Ok(deletedCustomer);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest("Serverda xatolik ro'y berdi.");
-            }
+            return Ok(deletedCustomer);
         }
     }
 }

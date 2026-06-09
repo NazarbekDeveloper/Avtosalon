@@ -1,8 +1,6 @@
 ﻿using Avtosalon.Models.Katalog;
 using Avtosalon.Services.Brands;
 using Microsoft.AspNetCore.Mvc;
-using Avtosalon.Models.Exceptions;
-using ValidationException = Avtosalon.Models.Exceptions.ValidationException;
 
 namespace Avtosalon.Controllers
 {
@@ -19,104 +17,41 @@ namespace Avtosalon.Controllers
         [HttpPost]
         public async ValueTask<ActionResult<Brand>> PostBrandAsync(Brand brand)
         {
-            try
-            {
-                Brand addedBrand = await brandService.AddBrandAsync(brand);
+            Brand addedBrand = await brandService.AddBrandAsync(brand);
 
-                return StatusCode(201, addedBrand);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest("Serverda xatolik yuz berdi.");
-            }
+            return StatusCode(201, addedBrand);
         }
 
         [HttpGet]
         public ActionResult<IQueryable<Brand>> GetAllBrand()
         {
-            try
-            {
-                IQueryable<Brand> brands = brandService.RetrieveAllBrands();
+            IQueryable<Brand> brands = brandService.RetrieveAllBrands();
 
-                return StatusCode(200,brands);
-            }
-            catch(Exception)
-            {
-                return BadRequest("Serverda xatolik yuz berdi");
-            }
+            return StatusCode(200, brands);
         }
 
         [HttpGet("{brandId}")]
         public async ValueTask<ActionResult<Brand>> GetBrandById(Guid brandId)
         {
-            try
-            {
-                Brand maybeBrand = await brandService.RetrieveBrandByIdAsync(brandId);
+            Brand maybeBrand = await brandService.RetrieveBrandByIdAsync(brandId);
 
-                return Ok(maybeBrand);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(NotFoundException  notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch(Exception)
-            {
-                return BadRequest("Serverda xatolik yuz berdi");
-            }
+            return Ok(maybeBrand);
         }
 
         [HttpPut]
         public async ValueTask<ActionResult<Brand>> PutBrandAsync(Brand brand)
         {
-            try
-            {
-                Brand maybeBrand = await brandService.ModifyBrandAsync(brand);
+            Brand maybeBrand = await brandService.ModifyBrandAsync(brand);
 
-                return Ok(maybeBrand);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch(Exception)
-            {
-                return BadRequest("Serverda xatolik yuz berdi");
-            }
+            return Ok(maybeBrand);
         }
 
         [HttpDelete("{brandId}")]
         public async ValueTask<ActionResult<Brand>> DeleteBrandAsync(Guid brandId)
         {
-            try
-            {
-                Brand deletedBrand = await brandService.RemoveBrandAsync(brandId);
+            Brand deletedBrand = await brandService.RemoveBrandAsync(brandId);
 
-                return Ok(deletedBrand);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch(Exception)
-            {
-                return BadRequest("Serverda xatolik yuz berdi");
-            }
+            return Ok(deletedBrand);
         }
     }
 }

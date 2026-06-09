@@ -1,8 +1,6 @@
 ﻿using Avtosalon.Models.Katalog;
 using Avtosalon.Services.CarModels;
 using Microsoft.AspNetCore.Mvc;
-using Avtosalon.Models.Exceptions;
-using ValidationException = Avtosalon.Models.Exceptions.ValidationException;
 
 namespace Avtosalon.Controllers
 {
@@ -19,104 +17,41 @@ namespace Avtosalon.Controllers
         [HttpPost]
         public async ValueTask<ActionResult<CarModel>> PostCarModelAsync(CarModel carModel)
         {
-            try
-            {
-                CarModel addedCarModel = await carModelService.AddCarModelAsync(carModel);
+            CarModel addedCarModel = await carModelService.AddCarModelAsync(carModel);
 
-                return StatusCode(201,addedCarModel);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return StatusCode(201, addedCarModel);
         }
 
         [HttpGet]
         public ActionResult<IQueryable<CarModel>> GetAllCarModels()
         {
-            try
-            {
-                IQueryable<CarModel> carModels = this.carModelService.RetrieveAllCarModels();
+            IQueryable<CarModel> carModels = this.carModelService.RetrieveAllCarModels();
 
-                return Ok(carModels);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(carModels);
         }
 
         [HttpGet("{carModelId}")]
         public async ValueTask<ActionResult<CarModel>> GetCarModelByIdAsync(Guid carModelId)
         {
-            try
-            {
-                CarModel maybeCarModel = await this.carModelService.RetrieveCarModelByIdAsync(carModelId);
+            CarModel maybeCarModel = await this.carModelService.RetrieveCarModelByIdAsync(carModelId);
 
-                return Ok(maybeCarModel);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(maybeCarModel);
         }
 
         [HttpPut]
         public async ValueTask<ActionResult<CarModel>> PutCarModelAsync(CarModel carModel)
         {
-            try
-            {
-                CarModel maybeCarModel = await this.carModelService.ModifyCarModelAsync(carModel);
+            CarModel maybeCarModel = await this.carModelService.ModifyCarModelAsync(carModel);
 
-                return Ok(maybeCarModel);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(maybeCarModel);
         }
 
         [HttpDelete("{carModelId}")]
         public async ValueTask<ActionResult<CarModel>> DeleteCarModelByIdAsync(Guid carModelId)
         {
-            try
-            {
-                CarModel deletedCarModel = await this.carModelService.RemoveCarModelAsync(carModelId);
+            CarModel deletedCarModel = await this.carModelService.RemoveCarModelAsync(carModelId);
 
-                return Ok(deletedCarModel);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
+            return Ok(deletedCarModel);
         }
     }
 }

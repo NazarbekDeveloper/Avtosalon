@@ -1,7 +1,6 @@
 ﻿using Avtosalon.Models.Persons;
 using Avtosalon.Services.Employees;
 using Microsoft.AspNetCore.Mvc;
-using Avtosalon.Models.Exceptions;
 
 namespace Avtosalon.Controllers
 {
@@ -18,104 +17,41 @@ namespace Avtosalon.Controllers
         [HttpPost]
         public async ValueTask<ActionResult<Employee>> PostEmployeeAsync(Employee employee)
         {
-            try
-            {
-                Employee addedEmployee = await this.employeeService.AddEmployeeAsync(employee);
+            Employee addedEmployee = await this.employeeService.AddEmployeeAsync(employee);
 
-                return StatusCode(201, addedEmployee);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest("Serverda xatolik yuz berdi.");
-            }
+            return StatusCode(201, addedEmployee);
         }
 
         [HttpGet]
         public ActionResult<IQueryable<Employee>> GetAllEmployees()
         {
-            try
-            {
-                IQueryable<Employee> employees = this.employeeService.RetrieveAllEmployees();
+            IQueryable<Employee> employees = this.employeeService.RetrieveAllEmployees();
 
-                return Ok(employees);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest("Serverda xatolik yuz berdi");
-            }
+            return Ok(employees);
         }
 
         [HttpGet("{employeeId}")]
         public async ValueTask<ActionResult<Employee>> GetEmployeeByIdAsync(Guid employeeId)
         {
-            try
-            {
-                Employee maybeEmployee = await this.employeeService.RetrieveEmployeeByIdAsync(employeeId);
+            Employee maybeEmployee = await this.employeeService.RetrieveEmployeeByIdAsync(employeeId);
 
-                return Ok(maybeEmployee);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest("Serverda xatolik yuz berdi.");
-            }
+            return Ok(maybeEmployee);
         }
 
         [HttpPut]
         public async ValueTask<ActionResult<Employee>> PutEmployeeAsync(Employee employee)
         {
-            try
-            {
-                Employee editedEmployee = await this.employeeService.ModifyEmployeeAsync(employee);
+            Employee editedEmployee = await this.employeeService.ModifyEmployeeAsync(employee);
 
-                return Ok(editedEmployee);
-            }
-            catch(ValidationException validatoinException)
-            {
-                return BadRequest(validatoinException.Message);
-            }
-            catch(NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest("Serverda xatolik yuz berdi.");
-            }
+            return Ok(editedEmployee);
         }
 
         [HttpDelete("{employeeId}")]
         public async ValueTask<ActionResult<Employee>> DeleteEmployeeByIdAsync(Guid employeeId)
         {
-            try
-            {
-                Employee deletedEmployee = await this.employeeService.RemoveEmployeeByIdAsync(employeeId);
+            Employee deletedEmployee = await this.employeeService.RemoveEmployeeByIdAsync(employeeId);
 
-                return Ok(deletedEmployee);
-            }
-            catch(ValidationException validationException)
-            {
-                return BadRequest(validationException.Message);
-            }
-            catch(NotFoundException notFoundException)
-            {
-                return NotFound(notFoundException.Message);
-            }
-            catch(Exception exception)
-            {
-                return BadRequest("Serverda xatolik yuz berdi.");
-            }
+            return Ok(deletedEmployee);
         }
     }
 }
