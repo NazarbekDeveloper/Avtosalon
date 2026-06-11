@@ -1,9 +1,11 @@
 ﻿using Avtosalon.Models.Persons;
 using Avtosalon.Services.Employees;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Avtosalon.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class EmployeesController : ControllerBase
@@ -15,6 +17,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Director")]
         public async ValueTask<ActionResult<Employee>> PostEmployeeAsync(Employee employee)
         {
             Employee addedEmployee = await this.employeeService.AddEmployeeAsync(employee);
@@ -23,6 +26,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Director, Manager")]
         public ActionResult<IQueryable<Employee>> GetAllEmployees()
         {
             IQueryable<Employee> employees = this.employeeService.RetrieveAllEmployees();
@@ -31,6 +35,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpGet("{employeeId}")]
+        [Authorize(Roles = "Director, Manager")]
         public async ValueTask<ActionResult<Employee>> GetEmployeeByIdAsync(Guid employeeId)
         {
             Employee maybeEmployee = await this.employeeService.RetrieveEmployeeByIdAsync(employeeId);
@@ -39,6 +44,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Director")]
         public async ValueTask<ActionResult<Employee>> PutEmployeeAsync(Employee employee)
         {
             Employee editedEmployee = await this.employeeService.ModifyEmployeeAsync(employee);
@@ -47,6 +53,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpDelete("{employeeId}")]
+        [Authorize(Roles = "Director")]
         public async ValueTask<ActionResult<Employee>> DeleteEmployeeByIdAsync(Guid employeeId)
         {
             Employee deletedEmployee = await this.employeeService.RemoveEmployeeByIdAsync(employeeId);

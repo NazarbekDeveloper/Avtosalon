@@ -1,9 +1,11 @@
 ﻿using Avtosalon.Models.Sales;
 using Avtosalon.Services.Sales;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Avtosalon.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class SalesController : ControllerBase
@@ -16,6 +18,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Director, Manager, Seller")]
         public async ValueTask<ActionResult<Sale>> PostSaleAsync(Sale sale)
         {
             Sale addedSale = await saleService.AddSaleAsync(sale);
@@ -24,6 +27,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Director, Manager, Seller")]
         public ActionResult<IQueryable<Sale>> GetAllSales()
         {
             IQueryable<Sale> sales = saleService.RetrieveAllSales();
@@ -32,6 +36,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpGet("{saleId}")]
+        [Authorize(Roles = "Director, Manager, Seller")]
         public async ValueTask<ActionResult<Sale>> GetSaleByIdAsync(Guid saleId)
         {
             Sale maybeSale = await saleService.RetrieveSaleByIdAsync(saleId);
@@ -40,6 +45,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Director")]
         public async ValueTask<ActionResult<Sale>> PutSaleAsync(Sale sale)
         {
             Sale updatedSale = await saleService.ModifySaleAsync(sale);
@@ -48,6 +54,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpDelete("{saleId}")]
+        [Authorize(Roles = "Director")]
         public async ValueTask<ActionResult<Sale>> DeleteSaleAsync(Guid saleId)
         {
             Sale deletedSale = await saleService.RemoveSaleAsync(saleId);

@@ -1,9 +1,11 @@
 ﻿using Avtosalon.Models.Katalog;
 using Avtosalon.Services.Brands;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Avtosalon.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class BrandsController : ControllerBase
@@ -15,6 +17,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Director, Manager")]
         public async ValueTask<ActionResult<Brand>> PostBrandAsync(Brand brand)
         {
             Brand addedBrand = await brandService.AddBrandAsync(brand);
@@ -23,6 +26,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Director, Manager, Seller")]
         public ActionResult<IQueryable<Brand>> GetAllBrand()
         {
             IQueryable<Brand> brands = brandService.RetrieveAllBrands();
@@ -31,6 +35,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpGet("{brandId}")]
+        [Authorize(Roles = "Director, Manager, Seller")]
         public async ValueTask<ActionResult<Brand>> GetBrandById(Guid brandId)
         {
             Brand maybeBrand = await brandService.RetrieveBrandByIdAsync(brandId);
@@ -39,6 +44,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Director, Manager")]
         public async ValueTask<ActionResult<Brand>> PutBrandAsync(Brand brand)
         {
             Brand maybeBrand = await brandService.ModifyBrandAsync(brand);
@@ -47,6 +53,7 @@ namespace Avtosalon.Controllers
         }
 
         [HttpDelete("{brandId}")]
+        [Authorize(Roles = "Director, Manager")]
         public async ValueTask<ActionResult<Brand>> DeleteBrandAsync(Guid brandId)
         {
             Brand deletedBrand = await brandService.RemoveBrandAsync(brandId);

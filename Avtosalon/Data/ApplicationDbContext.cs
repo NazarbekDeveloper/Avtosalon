@@ -2,6 +2,7 @@
 using Avtosalon.Models.Katalog;
 using Avtosalon.Models.Persons;
 using Avtosalon.Models.Sales;
+using Avtosalon.Models.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Avtosalon.Data
@@ -17,6 +18,7 @@ namespace Avtosalon.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Sale> Sales { get; set; }
+        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Brand>()
@@ -51,6 +53,24 @@ namespace Avtosalon.Data
             modelBuilder.Entity<Sale>()
                 .Property(s => s.TotalPrice)
                 .HasPrecision(18, 2);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.FullName)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.PasswordHash)
+                .IsRequired()
+                .HasMaxLength(256);
         }
     }
 }

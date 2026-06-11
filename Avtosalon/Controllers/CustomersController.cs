@@ -1,9 +1,11 @@
 ﻿using Avtosalon.Models.Persons;
 using Avtosalon.Services.Customers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Avtosalon.Controllers
 {
+    [Authorize(Roles = "Director, Manager, Seller")]
     [ApiController]
     [Route("api/[controller]")]
     public class CustomersController : ControllerBase
