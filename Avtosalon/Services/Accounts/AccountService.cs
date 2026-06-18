@@ -30,7 +30,7 @@ namespace Avtosalon.Services.Accounts
             bool isPasswordEqual = HashingHelper.IsHashValid(userCredential.Password, user.PasswordHash);
 
             if (isPasswordEqual is false)
-                throw new NotFoundException("Bundan username va parol bilan User topilmadi.");
+                throw new NotFoundException("Username yoki Password xato kiritildi.");
 
             return GenerateToken(user);
         }
